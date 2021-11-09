@@ -2811,7 +2811,7 @@ ssize_t oneplus_display_notify_fp_press(struct device *dev,
 	SDE_ATRACE_END("oneplus_display_notify_fp_press");
 	return count;
 }
-
+extern int oneplus_panel_status;
 extern bool HBM_flag;
 extern int aod_layer_hide;
 int oneplus_aod_fod = 0;
@@ -2838,8 +2838,12 @@ ssize_t oneplus_display_notify_dim(struct device *dev,
 	if (err < 0)
 		pr_err("oneplus_display_notify_dim sscanf failed");
 
+
 	//dim_status = !!dim_status;
 	pr_info("notify dim %d\n", dim_status);
+
+	if (oneplus_panel_status == 0)
+		dim_status = 0;
 
 	if (display->panel->aod_status == 0 && (dim_status == 2)) {
 		pr_err("fp set it in normal status\n");
