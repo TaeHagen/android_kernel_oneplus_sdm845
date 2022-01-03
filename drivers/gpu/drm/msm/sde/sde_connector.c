@@ -661,6 +661,9 @@ static int _sde_connector_update_hbm(struct sde_connector *c_conn)
 		else
 			fingerprint_mode = sde_crtc_get_fingerprint_mode(c_conn->encoder->crtc->state);
 	}
+	
+	if (!dsi_display->panel->panel_initialized)
+		fingerprint_mode = false;
 
 	if (fingerprint_mode != dsi_display->panel->is_hbm_enabled) {
 		dsi_display->panel->is_hbm_enabled = fingerprint_mode;

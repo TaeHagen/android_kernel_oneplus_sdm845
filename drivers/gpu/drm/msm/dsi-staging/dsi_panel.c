@@ -4218,6 +4218,13 @@ int dsi_panel_disable(struct dsi_panel *panel)
 			panel->aod_status = 1;
 		else if (panel->aod_mode == 0)
 			panel->aod_status = 0;
+		rc = dsi_panel_tx_cmd_set(panel, DSI_CMD_SET_HBM_OFF);
+		if (rc) {
+			pr_err("[%s] failed to send DSI_CMD_SET_HBM_OFF cmds, rc=%d\n",
+					panel->name, rc);
+			goto error;
+		}
+		panel->is_hbm_enabled = false;
 		rc = dsi_panel_tx_cmd_set(panel, DSI_CMD_SET_OFF);
 		if (rc) {
 			pr_err("[%s] failed to send DSI_CMD_SET_OFF cmds, rc=%d\n",
